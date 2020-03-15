@@ -81,7 +81,7 @@ package bp_common_aviary_pkg;
       ,itlb_els             : 8
       ,dtlb_els             : 8
       
-      ,lce_sets             : 32 //change here 64*8 (*8)*64=32K
+      ,lce_sets             : 64 //change here 64*8 (*8)*64=32K
       ,lce_assoc            : 8 //change here
       ,cce_block_width      : 512
       ,cce_pc_width         : 8
