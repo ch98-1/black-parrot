@@ -11,7 +11,7 @@
  * policy, we use the pseudo-LRU module implemnted for dcache.
  *
  * Notes:
- *
+ * By: Michael Yuen, Corwin Hansen
  */
 
     `define lce_sets_p  32
