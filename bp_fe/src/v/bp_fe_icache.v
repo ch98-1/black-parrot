@@ -14,7 +14,7 @@
  *
  */
 
-    `define lce_sets_p  64
+    `define lce_sets_p  32
     `define lce_assoc_p 8
 
 module bp_fe_icache
