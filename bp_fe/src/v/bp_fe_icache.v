@@ -14,7 +14,7 @@
  * By: Michael Yuen, Corwin Hansen
  */
 
-    `define lce_sets_p  64
+    `define lce_sets_p  128
     `define lce_assoc_p 8
 
 module bp_fe_icache
