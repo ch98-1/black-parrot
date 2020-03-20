@@ -4,7 +4,7 @@
  *   bp_fe_icache.v
  *
  * Description:
- *   To	be updated
+ *   To be updated
  * The icache module implements a virtually-indexed physically-tagged cache. Although the cache
  * design is parameterized, our default icache configuration is a 4-way set associative cache. Our
  * icache has an LCE as part of the cache controller that communicates with the CCE. For replacement
@@ -14,7 +14,11 @@
  * By: Michael Yuen, Corwin Hansen
  */
 
+<<<<<<< HEAD
     `define lce_sets_p  128
+=======
+    `define lce_sets_p  32
+>>>>>>> f074557e5361220dcd9306c19fe86c9f430a54de
     `define lce_assoc_p 8
 
 module bp_fe_icache
