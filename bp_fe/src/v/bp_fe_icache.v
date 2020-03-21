@@ -505,7 +505,7 @@ module bp_fe_icache
   ) read_mux_butterfly (
     .data_i(data_mem_data_lo)
     ,.sel_i(data_mem_pkt_way_r)
-    ,.data_o(data_mem_o)
+    ,.data_o(data_mem_o[lce_sets_icache_p*lce_assoc_icache_p-1:0])
   );
 
   assign data_mem_pkt_ready_o = ~tl_we;
