@@ -17,8 +17,8 @@ module bp_fe_lce_req
   import bp_common_aviary_pkg::*;
   #(parameter bp_params_e bp_params_p = e_bp_inv_cfg
    `declare_bp_proc_params(bp_params_p)
-   `declare_bp_lce_cce_if_widths(cce_id_width_p, lce_id_width_p, paddr_width_p, lce_assoc_icache_p, dword_width_p, cce_block_width_p)
-   `declare_bp_cache_service_if_widths(paddr_width_p, ptag_width_p, lce_sets_icache_p, lce_assoc_icache_p, dword_width_p, cce_block_width_p)
+   `declare_bp_lce_cce_if_widths(cce_id_width_p, lce_id_width_p, paddr_width_p, lce_assoc_icache_p, dword_width_p, cce_block_width_icache_p)
+   `declare_bp_cache_service_if_widths(paddr_width_p, ptag_width_p, lce_sets_icache_p, lce_assoc_icache_p, dword_width_p, cce_block_width_icache_p)
    
    , localparam way_id_width_lp=`BSG_SAFE_CLOG2(lce_assoc_icache_p)
    , localparam block_size_in_words_lp=lce_assoc_icache_p
@@ -63,8 +63,8 @@ module bp_fe_lce_req
 
   // lce interface
 
-  `declare_bp_lce_cce_if(cce_id_width_p, lce_id_width_p, paddr_width_p, lce_assoc_icache_p, dword_width_p, cce_block_width_p);
-  `declare_bp_cache_service_if(paddr_width_p, ptag_width_p, lce_sets_icache_p, lce_assoc_icache_p, dword_width_p, cce_block_width_p);
+  `declare_bp_lce_cce_if(cce_id_width_p, lce_id_width_p, paddr_width_p, lce_assoc_icache_p, dword_width_p, cce_block_width_icache_p);
+  `declare_bp_cache_service_if(paddr_width_p, ptag_width_p, lce_sets_icache_p, lce_assoc_icache_p, dword_width_p, cce_block_width_icache_p);
 
   bp_lce_cce_resp_s lce_resp;
   bp_lce_cce_req_s lce_req;

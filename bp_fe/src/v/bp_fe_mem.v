@@ -7,8 +7,8 @@ module bp_fe_mem
  import bp_common_rv64_pkg::*;
  #(parameter bp_params_e bp_params_p = e_bp_inv_cfg
    `declare_bp_proc_params(bp_params_p)
-   `declare_bp_lce_cce_if_widths(cce_id_width_p, lce_id_width_p, paddr_width_p, lce_assoc_icache_p, dword_width_p, cce_block_width_p)
-   `declare_bp_cache_service_if_widths(paddr_width_p, ptag_width_p, lce_sets_icache_p, lce_assoc_icache_p, dword_width_p, cce_block_width_p)
+   `declare_bp_lce_cce_if_widths(cce_id_width_p, lce_id_width_p, paddr_width_p, lce_assoc_icache_p, dword_width_p, cce_block_width_icache_p)
+   `declare_bp_cache_service_if_widths(paddr_width_p, ptag_width_p, lce_sets_icache_p, lce_assoc_icache_p, dword_width_p, cce_block_width_icache_p)
    
    , localparam way_id_width_lp=`BSG_SAFE_CLOG2(lce_assoc_icache_p)
    , localparam block_size_in_words_lp=lce_assoc_icache_p
@@ -54,7 +54,7 @@ module bp_fe_mem
    , input [cache_data_mem_pkt_width_lp-1:0]          data_mem_pkt_i
    , input                                            data_mem_pkt_v_i
    , output logic                                     data_mem_pkt_ready_o
-   , output logic [cce_block_width_p-1:0]             data_mem_o
+   , output logic [cce_block_width_icache_p-1:0]             data_mem_o
 
    , input [cache_tag_mem_pkt_width_lp-1:0]           tag_mem_pkt_i
    , input                                            tag_mem_pkt_v_i
@@ -68,7 +68,7 @@ module bp_fe_mem
    );
 
  `declare_bp_cfg_bus_s(vaddr_width_p, core_id_width_p, cce_id_width_p, lce_id_width_p, cce_pc_width_p, cce_instr_width_p);
- `declare_bp_fe_mem_structs(vaddr_width_p, lce_sets_icache_p, cce_block_width_p, vtag_width_p, ptag_width_p)
+ `declare_bp_fe_mem_structs(vaddr_width_p, lce_sets_icache_p, cce_block_width_icache_p, vtag_width_p, ptag_width_p)
 
 bp_cfg_bus_s cfg_bus_cast_i;
 bp_fe_mem_cmd_s  mem_cmd_cast_i;

@@ -23,7 +23,7 @@ module bp_fe_icache
 
   #(parameter bp_params_e bp_params_p = e_bp_inv_cfg
     `declare_bp_proc_params(bp_params_p)
-    `declare_bp_cache_service_if_widths(paddr_width_p, ptag_width_p, lce_sets_icache_p, lce_assoc_icache_p, dword_width_p, cce_block_width_p)
+    `declare_bp_cache_service_if_widths(paddr_width_p, ptag_width_p, lce_sets_icache_p, lce_assoc_icache_p, dword_width_p, cce_block_width_icache_p)
     , localparam way_id_width_lp=`BSG_SAFE_CLOG2(lce_assoc_icache_p)
     , localparam block_size_in_words_lp=lce_assoc_icache_p          
     , localparam data_mask_width_lp=(dword_width_p>>3)       
@@ -71,7 +71,7 @@ module bp_fe_icache
     , input data_mem_pkt_v_i
     , input [cache_data_mem_pkt_width_lp-1:0] data_mem_pkt_i
     , output logic data_mem_pkt_ready_o
-    , output logic [cce_block_width_p-1:0] data_mem_o
+    , output logic [cce_block_width_icache_p-1:0] data_mem_o
 
     // tag_mem
     , input tag_mem_pkt_v_i
@@ -90,7 +90,7 @@ module bp_fe_icache
   bp_cfg_bus_s cfg_bus_cast_i;
   assign cfg_bus_cast_i = cfg_bus_i;
 
-  `declare_bp_cache_service_if(paddr_width_p, ptag_width_p, lce_sets_icache_p, lce_assoc_icache_p, dword_width_p, cce_block_width_p);
+  `declare_bp_cache_service_if(paddr_width_p, ptag_width_p, lce_sets_icache_p, lce_assoc_icache_p, dword_width_p, cce_block_width_icache_p);
   bp_cache_req_s cache_req_cast_lo;
   bp_cache_req_metadata_s cache_req_metadata_cast_lo;
   assign cache_req_o = cache_req_cast_lo;

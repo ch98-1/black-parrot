@@ -21,8 +21,8 @@ module bp_fe_lce
   import bp_common_cfg_link_pkg::*;
   #(parameter bp_params_e bp_params_p = e_bp_inv_cfg
    `declare_bp_proc_params(bp_params_p)
-   `declare_bp_lce_cce_if_widths(cce_id_width_p, lce_id_width_p, paddr_width_p, lce_assoc_icache_p, dword_width_p, cce_block_width_p)
-   `declare_bp_cache_service_if_widths(paddr_width_p, ptag_width_p, lce_sets_icache_p, lce_assoc_icache_p, dword_width_p, cce_block_width_p)
+   `declare_bp_lce_cce_if_widths(cce_id_width_p, lce_id_width_p, paddr_width_p, lce_assoc_icache_p, dword_width_p, cce_block_width_icache_p)
+   `declare_bp_cache_service_if_widths(paddr_width_p, ptag_width_p, lce_sets_icache_p, lce_assoc_icache_p, dword_width_p, cce_block_width_icache_p)
 
    , localparam way_id_width_lp=`BSG_SAFE_CLOG2(lce_assoc_icache_p)
    , localparam block_size_in_words_lp=lce_assoc_icache_p
@@ -54,7 +54,7 @@ module bp_fe_lce
     , output logic [cache_data_mem_pkt_width_lp-1:0]             data_mem_pkt_o
     , output logic                                               data_mem_pkt_v_o
     , input                                                      data_mem_pkt_ready_i
-    , input  [cce_block_width_p-1:0]                             data_mem_i
+    , input  [cce_block_width_icache_p-1:0]                             data_mem_i
 
     , output logic [cache_tag_mem_pkt_width_lp-1:0]              tag_mem_pkt_o
     , output logic                                               tag_mem_pkt_v_o
@@ -85,8 +85,8 @@ module bp_fe_lce
   );
 
   `declare_bp_cfg_bus_s(vaddr_width_p, core_id_width_p, cce_id_width_p, lce_id_width_p, cce_pc_width_p, cce_instr_width_p);
-  `declare_bp_lce_cce_if(cce_id_width_p, lce_id_width_p, paddr_width_p, lce_assoc_icache_p, dword_width_p, cce_block_width_p);
-  `declare_bp_cache_service_if(paddr_width_p, ptag_width_p, lce_sets_icache_p, lce_assoc_icache_p, dword_width_p, cce_block_width_p);
+  `declare_bp_lce_cce_if(cce_id_width_p, lce_id_width_p, paddr_width_p, lce_assoc_icache_p, dword_width_p, cce_block_width_icache_p);
+  `declare_bp_cache_service_if(paddr_width_p, ptag_width_p, lce_sets_icache_p, lce_assoc_icache_p, dword_width_p, cce_block_width_icache_p);
 
   bp_cfg_bus_s cfg_bus_cast_i;
 

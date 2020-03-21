@@ -18,8 +18,8 @@ module bp_fe_lce_cmd
   import bp_common_aviary_pkg::*;
   #(parameter bp_params_e bp_params_p = e_bp_inv_cfg
    `declare_bp_proc_params(bp_params_p)
-   `declare_bp_lce_cce_if_widths(cce_id_width_p, lce_id_width_p, paddr_width_p, lce_assoc_icache_p, dword_width_p, cce_block_width_p)
-   `declare_bp_cache_service_if_widths(paddr_width_p, ptag_width_p, lce_sets_icache_p, lce_assoc_icache_p, dword_width_p, cce_block_width_p)
+   `declare_bp_lce_cce_if_widths(cce_id_width_p, lce_id_width_p, paddr_width_p, lce_assoc_icache_p, dword_width_p, cce_block_width_icache_p)
+   `declare_bp_cache_service_if_widths(paddr_width_p, ptag_width_p, lce_sets_icache_p, lce_assoc_icache_p, dword_width_p, cce_block_width_icache_p)
    
    , localparam way_id_width_lp=`BSG_SAFE_CLOG2(lce_assoc_icache_p)
    , localparam block_size_in_words_lp=lce_assoc_icache_p
@@ -54,7 +54,7 @@ module bp_fe_lce_cmd
     , output logic [cache_data_mem_pkt_width_lp-1:0]             data_mem_pkt_o
     , output logic                                               data_mem_pkt_v_o
     , input                                                      data_mem_pkt_ready_i
-    , input  logic [cce_block_width_p-1:0]                       data_mem_i
+    , input  logic [cce_block_width_icache_p-1:0]                       data_mem_i
 
     , output logic [cache_tag_mem_pkt_width_lp-1:0]              tag_mem_pkt_o
     , output logic                                               tag_mem_pkt_v_o
@@ -80,7 +80,7 @@ module bp_fe_lce_cmd
   );
 
   // lce interface
-  `declare_bp_lce_cce_if(cce_id_width_p, lce_id_width_p, paddr_width_p, lce_assoc_icache_p, dword_width_p, cce_block_width_p);
+  `declare_bp_lce_cce_if(cce_id_width_p, lce_id_width_p, paddr_width_p, lce_assoc_icache_p, dword_width_p, cce_block_width_icache_p);
 
   bp_lce_cmd_s lce_cmd_li;
   bp_lce_cce_resp_s lce_resp;
@@ -97,7 +97,7 @@ module bp_fe_lce_cmd
  
   // lce pkt
   //
-  `declare_bp_cache_data_mem_pkt_s(lce_sets_icache_p, lce_assoc_icache_p, cce_block_width_p);
+  `declare_bp_cache_data_mem_pkt_s(lce_sets_icache_p, lce_assoc_icache_p, cce_block_width_icache_p);
   `declare_bp_cache_tag_mem_pkt_s(lce_sets_icache_p, lce_assoc_icache_p, tag_width_lp);
   `declare_bp_cache_stat_mem_pkt_s(lce_sets_icache_p, lce_assoc_icache_p);
   
@@ -115,7 +115,7 @@ module bp_fe_lce_cmd
   
   assign stat_mem_cast_i = stat_mem_i;
 
-  logic [cce_block_width_p-1:0] data_r, data_n;
+  logic [cce_block_width_icache_p-1:0] data_r, data_n;
   logic flag_data_buffered_r, flag_data_buffered_n;
   logic flag_invalidate_r, flag_invalidate_n;
   
