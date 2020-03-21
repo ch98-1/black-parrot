@@ -123,7 +123,7 @@ module bp_fe_lce_req
    
   logic [cce_id_width_p-1:0] req_cce_id_lo;
   bp_me_addr_to_cce_id
-   #(.bp_params_p(bp_params_p))
+   #(.bp_params_p(bp_params_p), .lce_sets_parameterised_p(lce_sets_icache_p))
    req_map
     (.paddr_i(lce_req.addr)
 

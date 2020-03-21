@@ -4,6 +4,7 @@ module bp_me_addr_to_cce_id
  import bp_common_aviary_pkg::*;
  #(parameter bp_params_e bp_params_p = e_bp_inv_cfg
    `declare_bp_proc_params(bp_params_p)
+    ,lce_sets_parameterised_p = 64
    )
   (input [paddr_width_p-1:0]           paddr_i
 
@@ -26,7 +27,7 @@ wire local_addr_v_li  = (paddr_i < dram_base_addr_gp);
 wire dram_addr_v_li   = (paddr_i >= dram_base_addr_gp) && (paddr_i < coproc_base_addr_gp);
 
 localparam block_offset_lp = `BSG_SAFE_CLOG2(cce_block_width_p/8);
-localparam lg_lce_sets_lp = `BSG_SAFE_CLOG2(lce_sets_p);
+localparam lg_lce_sets_lp = `BSG_SAFE_CLOG2(lce_sets_parameterised_p);
 localparam lg_num_cce_lp = `BSG_SAFE_CLOG2(num_cce_p);
 
 // convert miss address (excluding block offset bits) into CCE ID
