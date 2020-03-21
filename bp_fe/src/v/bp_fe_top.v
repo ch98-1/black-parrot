@@ -13,19 +13,19 @@ module bp_fe_top
  #(parameter bp_params_e bp_params_p = e_bp_inv_cfg
    `declare_bp_proc_params(bp_params_p)
    `declare_bp_fe_be_if_widths(vaddr_width_p, paddr_width_p, asid_width_p, branch_metadata_fwd_width_p)
-   `declare_bp_lce_cce_if_widths(cce_id_width_p, lce_id_width_p, paddr_width_p, lce_assoc_p, dword_width_p, cce_block_width_p)
-   `declare_bp_cache_service_if_widths(paddr_width_p, ptag_width_p, lce_sets_p, lce_assoc_p, dword_width_p, cce_block_width_p)
+   `declare_bp_lce_cce_if_widths(cce_id_width_p, lce_id_width_p, paddr_width_p, lce_assoc_icahce_p, dword_width_p, cce_block_width_p)
+   `declare_bp_cache_service_if_widths(paddr_width_p, ptag_width_p, lce_sets_icahce_p, lce_assoc_icahce_p, dword_width_p, cce_block_width_p)
    
-   , localparam way_id_width_lp=`BSG_SAFE_CLOG2(lce_assoc_p)
-   , localparam block_size_in_words_lp=lce_assoc_p
+   , localparam way_id_width_lp=`BSG_SAFE_CLOG2(lce_assoc_icahce_p)
+   , localparam block_size_in_words_lp=lce_assoc_icahce_p
    , localparam data_mask_width_lp=(dword_width_p>>3)
    , localparam byte_offset_width_lp=`BSG_SAFE_CLOG2(dword_width_p>>3)
    , localparam word_offset_width_lp=`BSG_SAFE_CLOG2(block_size_in_words_lp)
-   , localparam index_width_lp=`BSG_SAFE_CLOG2(lce_sets_p)
+   , localparam index_width_lp=`BSG_SAFE_CLOG2(lce_sets_icahce_p)
    , localparam block_offset_width_lp=(word_offset_width_lp+byte_offset_width_lp)
    , localparam tag_width_lp=(paddr_width_p-block_offset_width_lp-index_width_lp)
    
-   , localparam bp_be_dcache_stat_width_lp = `bp_be_dcache_stat_info_width(lce_assoc_p)
+   , localparam bp_be_dcache_stat_width_lp = `bp_be_dcache_stat_info_width(lce_assoc_icahce_p)
 
    , localparam cfg_bus_width_lp = `bp_cfg_bus_width(vaddr_width_p, core_id_width_p, cce_id_width_p, lce_id_width_p, cce_pc_width_p, cce_instr_width_p)
    )
@@ -69,7 +69,7 @@ module bp_fe_top
    );
 
 `declare_bp_fe_be_if(vaddr_width_p, paddr_width_p, asid_width_p, branch_metadata_fwd_width_p);
-`declare_bp_fe_mem_structs(vaddr_width_p, lce_sets_p, cce_block_width_p, vtag_width_p, ptag_width_p)
+`declare_bp_fe_mem_structs(vaddr_width_p, lce_sets_icahce_p, cce_block_width_p, vtag_width_p, ptag_width_p)
    
 bp_fe_mem_cmd_s  mem_cmd_lo;
 logic            mem_cmd_v_lo, mem_cmd_yumi_li;

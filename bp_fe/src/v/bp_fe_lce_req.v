@@ -17,15 +17,15 @@ module bp_fe_lce_req
   import bp_common_aviary_pkg::*;
   #(parameter bp_params_e bp_params_p = e_bp_inv_cfg
    `declare_bp_proc_params(bp_params_p)
-   `declare_bp_lce_cce_if_widths(cce_id_width_p, lce_id_width_p, paddr_width_p, lce_assoc_p, dword_width_p, cce_block_width_p)
-   `declare_bp_cache_service_if_widths(paddr_width_p, ptag_width_p, lce_sets_p, lce_assoc_p, dword_width_p, cce_block_width_p)
+   `declare_bp_lce_cce_if_widths(cce_id_width_p, lce_id_width_p, paddr_width_p, lce_assoc_icache_p, dword_width_p, cce_block_width_p)
+   `declare_bp_cache_service_if_widths(paddr_width_p, ptag_width_p, lce_sets_icache_p, lce_assoc_icache_p, dword_width_p, cce_block_width_p)
    
-   , localparam way_id_width_lp=`BSG_SAFE_CLOG2(lce_assoc_p)
-   , localparam block_size_in_words_lp=lce_assoc_p
+   , localparam way_id_width_lp=`BSG_SAFE_CLOG2(lce_assoc_icache_p)
+   , localparam block_size_in_words_lp=lce_assoc_icache_p
    , localparam data_mask_width_lp=(dword_width_p>>3)
    , localparam byte_offset_width_lp=`BSG_SAFE_CLOG2(dword_width_p>>3)
    , localparam word_offset_width_lp=`BSG_SAFE_CLOG2(block_size_in_words_lp)
-   , localparam index_width_lp=`BSG_SAFE_CLOG2(lce_sets_p)
+   , localparam index_width_lp=`BSG_SAFE_CLOG2(lce_sets_icache_p)
    , localparam block_offset_width_lp=(word_offset_width_lp+byte_offset_width_lp)
    , localparam tag_width_lp=(paddr_width_p-block_offset_width_lp-index_width_lp)
    
@@ -63,8 +63,8 @@ module bp_fe_lce_req
 
   // lce interface
 
-  `declare_bp_lce_cce_if(cce_id_width_p, lce_id_width_p, paddr_width_p, lce_assoc_p, dword_width_p, cce_block_width_p);
-  `declare_bp_cache_service_if(paddr_width_p, ptag_width_p, lce_sets_p, lce_assoc_p, dword_width_p, cce_block_width_p);
+  `declare_bp_lce_cce_if(cce_id_width_p, lce_id_width_p, paddr_width_p, lce_assoc_icache_p, dword_width_p, cce_block_width_p);
+  `declare_bp_cache_service_if(paddr_width_p, ptag_width_p, lce_sets_icache_p, lce_assoc_icache_p, dword_width_p, cce_block_width_p);
 
   bp_lce_cce_resp_s lce_resp;
   bp_lce_cce_req_s lce_req;
@@ -123,7 +123,7 @@ module bp_fe_lce_req
    
   logic [cce_id_width_p-1:0] req_cce_id_lo;
   bp_me_addr_to_cce_id
-   #(.bp_params_p(bp_params_p), .lce_sets_parameterised_p(lce_sets_icache_p))
+   #(.bp_params_p(bp_params_p), .lce_sets_icache_parameterised_p(lce_sets_icache_p))
    req_map
     (.paddr_i(lce_req.addr)
 
