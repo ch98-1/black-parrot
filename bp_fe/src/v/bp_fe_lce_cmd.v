@@ -18,22 +18,22 @@ module bp_fe_lce_cmd
   import bp_common_aviary_pkg::*;
   #(parameter bp_params_e bp_params_p = e_bp_inv_cfg
    `declare_bp_proc_params(bp_params_p)
-   `declare_bp_lce_cce_if_widths(cce_id_width_p, lce_id_width_p, paddr_width_p, lce_assoc_icahce_p, dword_width_p, cce_block_width_p)
-   `declare_bp_cache_service_if_widths(paddr_width_p, ptag_width_p, lce_sets_icahce_p, lce_assoc_icahce_p, dword_width_p, cce_block_width_p)
+   `declare_bp_lce_cce_if_widths(cce_id_width_p, lce_id_width_p, paddr_width_p, lce_assoc_icache_p, dword_width_p, cce_block_width_p)
+   `declare_bp_cache_service_if_widths(paddr_width_p, ptag_width_p, lce_sets_icache_p, lce_assoc_icache_p, dword_width_p, cce_block_width_p)
    
-   , localparam way_id_width_lp=`BSG_SAFE_CLOG2(lce_assoc_icahce_p)
-   , localparam block_size_in_words_lp=lce_assoc_icahce_p
+   , localparam way_id_width_lp=`BSG_SAFE_CLOG2(lce_assoc_icache_p)
+   , localparam block_size_in_words_lp=lce_assoc_icache_p
    , localparam data_mask_width_lp=(dword_width_p>>3)
    , localparam byte_offset_width_lp=`BSG_SAFE_CLOG2(dword_width_p>>3)
    , localparam word_offset_width_lp=`BSG_SAFE_CLOG2(block_size_in_words_lp)
-   , localparam index_width_lp=`BSG_SAFE_CLOG2(lce_sets_icahce_p)
+   , localparam index_width_lp=`BSG_SAFE_CLOG2(lce_sets_icache_p)
    , localparam block_offset_width_lp=(word_offset_width_lp+byte_offset_width_lp)
    , localparam tag_width_lp=(paddr_width_p-block_offset_width_lp-index_width_lp)
    
-   , localparam bp_be_dcache_stat_width_lp = `bp_be_dcache_stat_info_width(lce_assoc_icahce_p)
+   , localparam bp_be_dcache_stat_width_lp = `bp_be_dcache_stat_info_width(lce_assoc_icache_p)
 
     // width for counter used during initiliazation and for sync messages
-    , localparam cnt_width_lp = `BSG_MAX(cce_id_width_p+1, `BSG_SAFE_CLOG2(lce_sets_icahce_p)+1)
+    , localparam cnt_width_lp = `BSG_MAX(cce_id_width_p+1, `BSG_SAFE_CLOG2(lce_sets_icache_p)+1)
     , localparam cnt_max_val_lp = ((2**cnt_width_lp)-1)
   )
   (
@@ -80,7 +80,7 @@ module bp_fe_lce_cmd
   );
 
   // lce interface
-  `declare_bp_lce_cce_if(cce_id_width_p, lce_id_width_p, paddr_width_p, lce_assoc_icahce_p, dword_width_p, cce_block_width_p);
+  `declare_bp_lce_cce_if(cce_id_width_p, lce_id_width_p, paddr_width_p, lce_assoc_icache_p, dword_width_p, cce_block_width_p);
 
   bp_lce_cmd_s lce_cmd_li;
   bp_lce_cce_resp_s lce_resp;
@@ -97,11 +97,11 @@ module bp_fe_lce_cmd
  
   // lce pkt
   //
-  `declare_bp_cache_data_mem_pkt_s(lce_sets_icahce_p, lce_assoc_icahce_p, cce_block_width_p);
-  `declare_bp_cache_tag_mem_pkt_s(lce_sets_icahce_p, lce_assoc_icahce_p, tag_width_lp);
-  `declare_bp_cache_stat_mem_pkt_s(lce_sets_icahce_p, lce_assoc_icahce_p);
+  `declare_bp_cache_data_mem_pkt_s(lce_sets_icache_p, lce_assoc_icache_p, cce_block_width_p);
+  `declare_bp_cache_tag_mem_pkt_s(lce_sets_icache_p, lce_assoc_icache_p, tag_width_lp);
+  `declare_bp_cache_stat_mem_pkt_s(lce_sets_icache_p, lce_assoc_icache_p);
   
-  `declare_bp_fe_icache_stat_s(lce_assoc_icahce_p);
+  `declare_bp_fe_icache_stat_s(lce_assoc_icache_p);
 
   bp_cache_data_mem_pkt_s data_mem_pkt;
   bp_cache_tag_mem_pkt_s tag_mem_pkt;
@@ -200,7 +200,7 @@ module bp_fe_lce_cmd
           stat_mem_pkt_v         = 1'b1;
         end
 
-        state_n = ((cnt_r == cnt_width_lp'(lce_sets_icahce_p-1)) & tag_mem_pkt_v & stat_mem_pkt_v)
+        state_n = ((cnt_r == cnt_width_lp'(lce_sets_icache_p-1)) & tag_mem_pkt_v & stat_mem_pkt_v)
           ? e_lce_cmd_uncached_only
           : e_lce_cmd_reset;
         cnt_clear = (state_n == e_lce_cmd_uncached_only);
