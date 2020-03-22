@@ -32,7 +32,8 @@ module bp_uce
     , output logic [cache_data_mem_pkt_width_lp-1:0] data_mem_pkt_o
     , output logic                                   data_mem_pkt_v_o
     , input                                          data_mem_pkt_ready_i
-    , input [cce_block_width_p-1:0]                  data_mem_i
+    , input [cce_block_width_p-1:0]                  data_mem_i_be
+    , input [cce_block_width_p-1:0]                  data_mem_i_fe
 
     , output logic [cache_stat_mem_pkt_width_lp-1:0] stat_mem_pkt_o
     , output logic                                   stat_mem_pkt_v_o
@@ -104,15 +105,26 @@ module bp_uce
      ,.data_o(cache_req_metadata_v_r)
      );
 
-  logic [cce_block_width_p-1:0] dirty_data_r;
+  logic [cce_block_width_p-1:0] dirty_data_r_be;
   bsg_dff_en_bypass
    #(.width_p(cce_block_width_p))
    dirty_data_reg
     (.clk_i(clk_i)
 
     ,.en_i(dirty_data_v_r)
-    ,.data_i(data_mem_i)
+    ,.data_i(data_mem_i_be)
     ,.data_o(dirty_data_r)
+    );
+
+  logic [cce_block_width_icache_p-1:0] dirty_data_r_fe;
+  bsg_dff_en_bypass
+   #(.width_p(cce_block_width_icache_p))
+   dirty_data_reg_fe
+    (.clk_i(clk_i)
+
+    ,.en_i(dirty_data_v_r)
+    ,.data_i(data_mem_i_fe)
+    ,.data_o(dirty_data_r_fe)
     );
 
   logic [ptag_width_p-1:0] dirty_tag_r;

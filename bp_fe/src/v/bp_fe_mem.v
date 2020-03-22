@@ -12,8 +12,8 @@ module bp_fe_mem
    
    , localparam way_id_width_lp=`BSG_SAFE_CLOG2(lce_assoc_icache_p)
    , localparam block_size_in_words_lp=lce_assoc_icache_p
-   , localparam data_mask_width_lp=(dword_width_p>>3)
-   , localparam byte_offset_width_lp=`BSG_SAFE_CLOG2(dword_width_p>>3)
+   , localparam data_mask_width_lp=(dword_width_p/lce_assoc_icache_p)
+   , localparam byte_offset_width_lp=`BSG_SAFE_CLOG2(dword_width_p>>>3)
    , localparam word_offset_width_lp=`BSG_SAFE_CLOG2(block_size_in_words_lp)
    , localparam index_width_lp=`BSG_SAFE_CLOG2(lce_sets_icache_p)
    , localparam block_offset_width_lp=(word_offset_width_lp+byte_offset_width_lp)

@@ -78,7 +78,8 @@ module bp_core
   bp_cache_data_mem_pkt_s [1:0] data_mem_pkt_li;
   logic [1:0] data_mem_pkt_v_li;
   logic [1:0] data_mem_pkt_ready_lo;
-  logic [1:0][cce_block_width_p-1:0] data_mem_lo;
+  logic [cce_block_width_p-1:0] data_mem_lo_be;
+  logic [cce_block_width_icache_p-1:0] data_mem_lo_fe;
 
   bp_cache_tag_mem_pkt_s[1:0] tag_mem_pkt_li;
   logic [1:0] tag_mem_pkt_v_li;
@@ -119,7 +120,8 @@ module bp_core
      ,.data_mem_pkt_i(data_mem_pkt_li)
      ,.data_mem_pkt_v_i(data_mem_pkt_v_li)
      ,.data_mem_pkt_ready_o(data_mem_pkt_ready_lo)
-     ,.data_mem_o(data_mem_lo)
+     ,.data_mem_o_be(data_mem_lo_be)
+     ,.data_mem_o_fe(data_mem_lo_fe)
 
      ,.tag_mem_pkt_i(tag_mem_pkt_li)
      ,.tag_mem_pkt_v_i(tag_mem_pkt_v_li)
@@ -155,7 +157,7 @@ module bp_core
      ,.data_mem_pkt_o(data_mem_pkt_li[0])
      ,.data_mem_pkt_v_o(data_mem_pkt_v_li[0])
      ,.data_mem_pkt_ready_i(data_mem_pkt_ready_lo[0])
-     ,.data_mem_i(data_mem_lo[0])
+     ,.data_mem_i(data_mem_lo_fe)
 
      ,.tag_mem_pkt_o(tag_mem_pkt_li[0])
      ,.tag_mem_pkt_v_o(tag_mem_pkt_v_li[0])
@@ -203,7 +205,7 @@ module bp_core
     ,.data_mem_pkt_o(data_mem_pkt_li[1])
     ,.data_mem_pkt_v_o(data_mem_pkt_v_li[1])
     ,.data_mem_pkt_ready_i(data_mem_pkt_ready_lo[1])
-    ,.data_mem_i(data_mem_lo[1])
+    ,.data_mem_i(data_mem_lo_be)
 
     ,.tag_mem_pkt_o(tag_mem_pkt_li[1])
     ,.tag_mem_pkt_v_o(tag_mem_pkt_v_li[1])

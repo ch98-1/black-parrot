@@ -55,7 +55,8 @@ module bp_softcore
   logic [1:0][ptag_width_p-1:0] tag_mem_lo;
   bp_cache_data_mem_pkt_s [1:0] data_mem_pkt_li;
   logic [1:0] data_mem_pkt_v_li, data_mem_pkt_ready_lo;
-  logic [1:0][cce_block_width_p-1:0] data_mem_lo;
+  logic [cce_block_width_p-1:0] data_mem_lo_be;
+  logic [cce_block_width_icache_p-1:0] data_mem_lo_fe;
   bp_cache_stat_mem_pkt_s [1:0] stat_mem_pkt_li;
   logic [1:0] stat_mem_pkt_v_li, stat_mem_pkt_ready_lo;
   bp_be_dcache_stat_info_s [1:0] stat_mem_lo;
@@ -110,7 +111,8 @@ module bp_softcore
      ,.data_mem_pkt_i(data_mem_pkt_li)
      ,.data_mem_pkt_v_i(data_mem_pkt_v_li)
      ,.data_mem_pkt_ready_o(data_mem_pkt_ready_lo)
-     ,.data_mem_o(data_mem_lo)
+     ,.data_mem_o_be(data_mem_lo_be)
+     ,.data_mem_o_fe(data_mem_lo_fe)
 
      ,.stat_mem_pkt_i(stat_mem_pkt_li)
      ,.stat_mem_pkt_v_i(stat_mem_pkt_v_li)
@@ -150,7 +152,8 @@ module bp_softcore
          ,.data_mem_pkt_o(data_mem_pkt_li[i])
          ,.data_mem_pkt_v_o(data_mem_pkt_v_li[i])
          ,.data_mem_pkt_ready_i(data_mem_pkt_ready_lo[i])
-         ,.data_mem_i(data_mem_lo[i])
+         ,.data_mem_i_be(data_mem_lo_be)
+         ,.data_mem_i_fe(data_mem_lo_fe)
 
          ,.stat_mem_pkt_o(stat_mem_pkt_li[i])
          ,.stat_mem_pkt_v_o(stat_mem_pkt_v_li[i])

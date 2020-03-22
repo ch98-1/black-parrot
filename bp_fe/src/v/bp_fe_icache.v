@@ -26,8 +26,8 @@ module bp_fe_icache
     `declare_bp_cache_service_if_widths(paddr_width_p, ptag_width_p, lce_sets_icache_p, lce_assoc_icache_p, dword_width_p, cce_block_width_icache_p)
     , localparam way_id_width_lp=`BSG_SAFE_CLOG2(lce_assoc_icache_p)
     , localparam block_size_in_words_lp=lce_assoc_icache_p          
-    , localparam data_mask_width_lp=(dword_width_p>>3)       
-    , localparam byte_offset_width_lp=`BSG_SAFE_CLOG2(dword_width_p>>3) 
+    , localparam data_mask_width_lp=(dword_width_p>>>3)       
+    , localparam byte_offset_width_lp=`BSG_SAFE_CLOG2(dword_width_p>>>3) 
     , localparam word_offset_width_lp=`BSG_SAFE_CLOG2(block_size_in_words_lp)      
     , localparam index_width_lp=`BSG_SAFE_CLOG2(lce_sets_icache_p)                        
     , localparam block_offset_width_lp=(word_offset_width_lp+byte_offset_width_lp) 
@@ -505,7 +505,7 @@ module bp_fe_icache
   ) read_mux_butterfly (
     .data_i(data_mem_data_lo)
     ,.sel_i(data_mem_pkt_way_r)
-    ,.data_o(data_mem_o[lce_sets_icache_p*lce_assoc_icache_p-1:0])
+    ,.data_o(data_mem_o)
   );
 
   assign data_mem_pkt_ready_o = ~tl_we;
